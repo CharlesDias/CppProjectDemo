@@ -17,7 +17,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 ### CMAKE MODULES
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
+# Add Git submodule
 include(AddGitSubmodule)
+# Doxygen module
+include(Docs)
 
 set(CUSTOM_LIBRARY_NAME custom_library)
 set(EXECUTABLE_NAME application)

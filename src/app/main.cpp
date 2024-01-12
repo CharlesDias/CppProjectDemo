@@ -9,11 +9,36 @@
 
 using json = nlohmann::json;
 
+/**
+ * @brief Prints the version of the libraries used.
+ */
 void libraries_version();
+
+/**
+ * @brief Demonstrates the usage of the spdlog library.
+ */
 void spdlog_demo();
+
+/**
+ * @brief Demonstrates the usage of the JSON library.
+ */
 void json_demo();
+
+/**
+ * @brief Demonstrates the usage of the cxxopts library.
+ *
+ * @param argc The number of command-line arguments.
+ * @param argv The command-line arguments.
+ */
 void cxxopts_demo(int argc, char** argv);
 
+/**
+ * @brief The main function.
+ *
+ * @param argc The number of command-line arguments.
+ * @param argv The command-line arguments.
+ * @return int The exit code.
+ */
 int main(int argc, char** argv)
 {
     print_configuration();
