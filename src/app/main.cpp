@@ -1,28 +1,30 @@
 #include <iostream>
+#include <fstream>
 
 #include "spdlog/spdlog.h"
 #include "nlohmann/json.hpp"
 
 #include "custom_lib/my_lib.h"
 
+using json = nlohmann::json;
+
 void spdlog_demo();
+void json_demo();
 
 int main()
 {
     print_configuration();
 
-    std::cout << "\nJSON library version: "
-              << NLOHMANN_JSON_VERSION_MAJOR << "."
-              << NLOHMANN_JSON_VERSION_MINOR << "."
-              << NLOHMANN_JSON_VERSION_PATCH << "\n";
-
     spdlog_demo();
+    json_demo();
 
     return 0;
 }
 
 void spdlog_demo(void)
 {
+    std::cout << "\n============================= spdlog Demo =============================\n" << std::endl;
+
     spdlog::info("Welcome to spdlog!");
     spdlog::error("Some error message with arg: {}", 1);
 
@@ -41,4 +43,45 @@ void spdlog_demo(void)
     spdlog::info("Welcome to spdlog!");
     spdlog::error("Some error message with arg: {}", 1);
     spdlog::debug("This message should be displayed..");
+}
+
+void json_demo(void)
+{
+    std::cout << "\n============================= JSON Demo =============================" << std::endl;
+
+    std::cout << "\nJSON library version: "
+            << NLOHMANN_JSON_VERSION_MAJOR << "."
+            << NLOHMANN_JSON_VERSION_MINOR << "."
+            << NLOHMANN_JSON_VERSION_PATCH << "\n\n";
+
+    nlohmann::json j;
+    j["pi"] = 3.141;
+    j["happy"] = true;
+    j["name"] = "Niels";
+    j["nothing"] = nullptr;
+    j["answer"]["everything"] = 42;
+    j["list"] = { 1, 0, 2 };
+    j["object"] = { {"currency", "USD"}, {"value", 42.99} };
+
+    std::cout << j << std::endl << std::endl;
+
+    // Load the JSON file
+    std::ifstream file("sensor_data/sensor_data.json");
+    json jsonData;
+    file >> jsonData;
+
+    // Process the JSON data
+    std::string sensorId = jsonData["sensor_id"];
+    std::cout << "Sensor ID: " << sensorId << std::endl;
+
+    for (auto& reading : jsonData["readings"]) {
+        std::string timestamp = reading["timestamp"];
+        double temperature = reading["temperature_celsius"];
+        double humidity = reading["humidity_percentage"];
+
+        std::cout << "Timestamp: " << timestamp
+                  << ", Temperature: " << temperature
+                  << " Celsius, Humidity: " << humidity
+                  << "%" << std::endl;
+    }
 }

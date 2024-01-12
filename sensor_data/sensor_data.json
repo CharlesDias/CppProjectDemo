@@ -1,0 +1,20 @@
+{
+    "sensor_id": "sensor_12345",
+    "readings": [
+      {
+        "timestamp": "2024-01-12T10:00:00Z",
+        "temperature_celsius": 22.5,
+        "humidity_percentage": 45.0
+      },
+      {
+        "timestamp": "2024-01-12T10:05:00Z",
+        "temperature_celsius": 22.7,
+        "humidity_percentage": 46.5
+      },
+      {
+        "timestamp": "2024-01-12T10:10:00Z",
+        "temperature_celsius": 22.9,
+        "humidity_percentage": 47.0
+      }
+    ]
+  }
