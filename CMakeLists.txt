@@ -6,7 +6,7 @@ project(CppProjectDemo
 
 set(CMAKE_CXX_STANDARD              20)
 set(CMAKE_CXX_STANDARD_REQUIRED     ON)     # Define explicitly to use the standard declared in the previous line
-set(CMAKE_CXX_EXTENSIONS            Off)    # Disable compiler extensions
+set(CMAKE_CXX_EXTENSIONS            OFF)    # Disable compiler extensions
 
 # This is necessary for Sonarlint tools
 # If enabled, generates a compile_commands.json file containing the exact compiler calls for all
@@ -15,12 +15,26 @@ set(CMAKE_CXX_EXTENSIONS            Off)    # Disable compiler extensions
 # property or the CMAKE_UNITY_BUILD variable.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Options
+option(BUILD_APPLICATION "Build the application" ON)
+option(BUILD_TESTS "Build the tests" OFF)
+
+option(ENABLE_WARNINGS "Enable to add warnings to a target." ON)
+option(ENABLE_WARNINGS_AS_ERRORS "Enable to treat warnings as errors." OFF)
+
+option(INCLUDE_GTEST "Include googletest in build" ON)
+option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
+
 ### CMAKE MODULES
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 # Add Git submodule
 include(AddGitSubmodule)
 # Doxygen module
 include(Docs)
+
+if(ENABLE_WARNINGS)
+    include(Warnings)
+endif()
 
 set(CUSTOM_LIBRARY_NAME custom_library)
 set(EXECUTABLE_NAME application)
@@ -31,12 +45,6 @@ set(SPDLOG_TAG_VERSION                  v1.13.0)
 set(CXXOPTS_TAG_VERSION                 v3.1.1)
 set(JSON_LIB_TAG_VERSION                v3.11.3)
 set(GOOGLE_TEST_TAG_VERSION             v1.14.0)
-
-option(BUILD_APPLICATION "Build the application" ON)
-option(BUILD_TESTS "Build the tests" OFF)
-
-option(INCLUDE_GTEST "Include googletest in build" ON)
-option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
 
 add_git_submodule(thridparty/sdplog ${SPDLOG_TAG_VERSION})
 add_git_submodule(thridparty/cxxopts ${CXXOPTS_TAG_VERSION})

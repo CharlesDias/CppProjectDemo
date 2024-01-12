@@ -10,3 +10,11 @@ target_link_libraries(${EXECUTABLE_NAME}
     cxxopts::cxxopts
     nlohmann_json::nlohmann_json
 )
+
+if(${ENABLE_WARNINGS})
+    target_set_warnings(
+        TARGET ${EXECUTABLE_NAME}
+        ENABLE ${ENABLE_WARNINGS}
+        AS_ERRORS ${ENABLE_WARNINGS_AS_ERRORS}
+    )
+endif()
