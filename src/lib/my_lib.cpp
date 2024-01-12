@@ -1,12 +1,14 @@
 #include <iostream>
 
+#include "spdlog/spdlog.h"
+
 #include "custom_lib/my_lib.h"
 #include "configuration/config.h"
 
 void print_configuration()
 {
-    std::cout << "Project name: " << configuration::project_name << "\n";
-    std::cout << "Project version: " << configuration::project_version << "\n";
+    spdlog::info("Project name:    {}", configuration::project_name);
+    spdlog::info("Project version: {}", configuration::project_version);
 }
 
 int addition(int a, int b)
