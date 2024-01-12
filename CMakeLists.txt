@@ -24,6 +24,7 @@ set(EXECUTABLE_NAME application)
 
 ### Thrid party libraries versions
 set(SPDLOG_TAG_VERSION                  v1.13.0)
+set(CXXOPTS_TAG_VERSION                 v3.1.1)
 set(JSON_LIB_TAG_VERSION                v3.11.3)
 set(GOOGLE_TEST_TAG_VERSION             v1.14.0)
 
@@ -34,6 +35,7 @@ option(INCLUDE_GTEST "Include googletest in build" ON)
 option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
 
 add_git_submodule(thridparty/sdplog ${SPDLOG_TAG_VERSION})
+add_git_submodule(thridparty/cxxopts ${CXXOPTS_TAG_VERSION})
 add_git_submodule(thridparty/json ${JSON_LIB_TAG_VERSION})
 
 if(INCLUDE_GTEST)

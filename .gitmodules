@@ -7,3 +7,6 @@
 [submodule "thridparty/sdplog"]
 	path = thridparty/sdplog
 	url = https://github.com/gabime/spdlog.git
+[submodule "thridparty/cxxopts"]
+	path = thridparty/cxxopts
+	url = https://github.com/jarro2783/cxxopts.git

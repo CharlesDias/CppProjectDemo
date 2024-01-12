@@ -22,7 +22,7 @@ build_tests:
 
 run:
 	@echo "-------------------- Running the application ----------------"
-	./build/src/app/application
+	./build/src/app/application -h
 	@echo ""
 
 tests: build_tests
