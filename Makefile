@@ -16,7 +16,7 @@ build_lib:
 
 build_tests:
 	@echo "-------------------- Configure and Build CMake --------------"
-	cmake -DBUILD_TESTS=ON -DBUILD_APPLICATION=OFF -S . -B build
+	cmake -DBUILD_TESTS=ON -DINCLUDE_GTEST=ON -DBUILD_APPLICATION=OFF -S . -B build
 	cmake --build build -j4
 	@echo ""
 
@@ -27,7 +27,7 @@ run:
 
 tests: build_tests
 	@echo "-------------------- Running CTest --------------------------"
-	GTEST_COLOR=1 ctest --test-dir build --rerun-failed --output-on-failure -j4
+	GTEST_COLOR=1 ctest --test-dir build/tests --rerun-failed --output-on-failure -j4
 	@echo ""
 
 quality:
@@ -36,7 +36,7 @@ quality:
 	lizard --CCN 15 --length 200 --arguments 6 ./src > docs/report-lizard.txt
 	@echo ""
 
-dependency: clean
+dependency: clear
 	@echo "-------------------- Create Graph Dependecy -----------------"
 	cmake -DINCLUDE_GTEST=OFF -S . -B build
 	cd build && cmake .. --graphviz=graph.dot && dot -Tpng graph.dot -o graph_image.png

@@ -9,12 +9,12 @@ void print_configuration()
     std::cout << "Project version: " << configuration::project_version << "\n";
 }
 
-int sum(int a, int b)
+int addition(int a, int b)
 {
     return a + b;
 }
 
-int sub(int a, int b)
+int subtraction(int a, int b)
 {
     return a - b;
 }

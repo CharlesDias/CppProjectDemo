@@ -19,18 +19,46 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 include(AddGitSubmodule)
 
-add_git_submodule(thridparty/json)
-
-set(LIBRARY_NAME custom_library)
+set(CUSTOM_LIBRARY_NAME custom_library)
 set(EXECUTABLE_NAME application)
+
+set(JSON_LIB_TAG_VERSION                v3.11.3)
+set(GOOGLE_TEST_TAG_VERSION             v1.14.0)
 
 option(BUILD_APPLICATION "Build the application" ON)
 option(BUILD_TESTS "Build the tests" OFF)
+
+option(INCLUDE_GTEST "Include googletest in build" ON)
+option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
+
+add_git_submodule(thridparty/json ${JSON_LIB_TAG_VERSION})
+
+if(INCLUDE_GTEST)
+    if(USE_GIT_SUBMODULES)
+        message(STATUS "GIT SUBMODULES: updating git submodules...")
+        add_git_submodule(thridparty/googletest ${GOOGLE_TEST_TAG_VERSION})
+    else()
+        message(STATUS "FETCH CONTENT: Clone Google Test Framework from Git repository...")
+        include(FetchContent)
+        FetchContent_Declare(
+            googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG ${GOOGLE_TEST_TAG_VERSION}
+        )
+
+        # For Windows: Prevent overriding the parent project's compiler/linker settings
+        set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+        FetchContent_MakeAvailable(googletest)
+    endif()
+endif()
 
 add_subdirectory(configuration)
 add_subdirectory(thridparty)
 
 add_subdirectory(src)
+
+# It must to be declare before the test folder
+enable_testing()
 
 if(BUILD_TESTS)
     add_subdirectory(tests)
