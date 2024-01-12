@@ -4,6 +4,7 @@
 #include "spdlog/spdlog.h"
 #include "cxxopts.hpp"
 #include "nlohmann/json.hpp"
+#include "gtest_samples/sample1.h"
 
 #include "custom_lib/my_lib.h"
 
@@ -23,6 +24,11 @@ void spdlog_demo();
  * @brief Demonstrates the usage of the JSON library.
  */
 void json_demo();
+
+/**
+ * @brief Demonstrates the usage of the Google Test library.
+ */
+void gtest_samples();
 
 /**
  * @brief Demonstrates the usage of the cxxopts library.
@@ -46,6 +52,7 @@ int main(int argc, char** argv)
     libraries_version();
     spdlog_demo();
     json_demo();
+    gtest_samples();
     cxxopts_demo(argc, argv);
 
     return 0;
@@ -128,6 +135,13 @@ void json_demo(void)
                   << " Celsius, Humidity: " << humidity
                   << "%" << std::endl;
     }
+}
+
+void gtest_samples(void)
+{
+    std::cout << "\n============================= Google Test Demo =============================\n" << std::endl;
+    int number = 5;
+    std::cout << number << " is a primer number? " << std::boolalpha << IsPrime(number) << std::endl;
 }
 
 void cxxopts_demo(int argc, char** argv)

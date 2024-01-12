@@ -24,6 +24,7 @@ include(Docs)
 
 set(CUSTOM_LIBRARY_NAME custom_library)
 set(EXECUTABLE_NAME application)
+set(GTEST_SAMPLES_LIB gtest_samples)
 
 ### Thrid party libraries versions
 set(SPDLOG_TAG_VERSION                  v1.13.0)
