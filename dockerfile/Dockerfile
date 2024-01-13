@@ -26,6 +26,9 @@ RUN apt-get update && apt-get clean && apt-get install -y \
 # Install Lizard
 RUN pip3 install lizard
 
+# Install CMake-format
+RUN pip3 install cmake-format
+
 # Get and install the CMake
 ENV version=3.28.1
 
