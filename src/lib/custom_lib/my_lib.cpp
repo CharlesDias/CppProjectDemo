@@ -2,8 +2,8 @@
 
 #include "spdlog/spdlog.h"
 
-#include "custom_lib/my_lib.h"
 #include "configuration/config.h"
+#include "custom_lib/my_lib.h"
 
 void print_configuration()
 {

@@ -1,5 +1,3 @@
-include(GoogleTest)
-
 set(CUSTOM_LIB_TEST custom_lib_test)
 
 add_executable( ${CUSTOM_LIB_TEST}
@@ -12,4 +10,5 @@ target_link_libraries( ${CUSTOM_LIB_TEST}
    GTest::gtest_main
 )
 
+include(GoogleTest)
 gtest_discover_tests( ${CUSTOM_LIB_TEST} )

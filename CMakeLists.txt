@@ -19,40 +19,59 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(BUILD_APPLICATION "Build the application" ON)
 option(BUILD_TESTS "Build the tests" OFF)
 
-option(ENABLE_WARNINGS "Enable to add warnings to a target." ON)
-option(ENABLE_WARNINGS_AS_ERRORS "Enable to treat warnings as errors." OFF)
-
-option(INCLUDE_GTEST "Include googletest in build" ON)
 option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
+
+option(ENABLE_WARNINGS "Enable to add warnings to a target." ON)
+option(ENABLE_WARNINGS_AS_ERRORS "Enable to treat warnings as errors." ON)
+
+option(ENABLE_CLANG_TIDY "Enable to add clang tidy." ON)
+
+option(ENABLE_SANITIZE_ADDR "Enable address sanitizer" ON)
+option(ENABLE_SANITIZE_UNDEF "Enable undefined sanitizer" OFF)
+# option(ENABLE_SANITIZE_THREAD "Enable thread sanitizer" OFF) # This option cannot be enabled in combination with the other sanitizers
 
 ### CMAKE MODULES
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
-# Add Git submodule
+
+set(CUSTOM_LIBRARY_NAME custom_library)
+set(EXECUTABLE_NAME application)
+set(GTEST_SAMPLES_LIB gtest_samples)
+
 include(AddGitSubmodule)
-# Doxygen module
 include(Docs)
 
 if(ENABLE_WARNINGS)
     include(Warnings)
 endif()
 
-set(CUSTOM_LIBRARY_NAME custom_library)
-set(EXECUTABLE_NAME application)
-set(GTEST_SAMPLES_LIB gtest_samples)
+if(ENABLE_SANITIZE_ADDR OR ENABLE_SANITIZE_UNDEF)
+    message(STATUS "SANITIZER: Enabling sanitizers...")
+    include(Sanitizer)
+    add_sanitizer_flags()
+endif()
 
-### Thrid party libraries versions
+### Thrid party libraries
+# Libraries versions
 set(SPDLOG_TAG_VERSION                  v1.13.0)
 set(CXXOPTS_TAG_VERSION                 v3.1.1)
 set(JSON_LIB_TAG_VERSION                v3.11.3)
 set(GOOGLE_TEST_TAG_VERSION             v1.14.0)
 
-add_git_submodule(thridparty/sdplog ${SPDLOG_TAG_VERSION})
-add_git_submodule(thridparty/cxxopts ${CXXOPTS_TAG_VERSION})
-add_git_submodule(thridparty/json ${JSON_LIB_TAG_VERSION})
+if(USE_GIT_SUBMODULES)
+    message(STATUS "GIT SUBMODULES: updating git submodules...")
+    add_git_submodule(thridparty/sdplog ${SPDLOG_TAG_VERSION})
+    add_git_submodule(thridparty/cxxopts ${CXXOPTS_TAG_VERSION})
+    add_git_submodule(thridparty/json ${JSON_LIB_TAG_VERSION})
+else()
+    message(STATUS "Using CPM")
+    include(CPM)
+    cpmaddpackage("gh:gabime/spdlog@${SPDLOG_TAG_VERSION}")
+    cpmaddpackage("gh:jarro2783/cxxopts@${CXXOPTS_TAG_VERSION}")
+    cpmaddpackage("gh:nlohmann/json@${JSON_LIB_TAG_VERSION}")
+endif()
 
-if(INCLUDE_GTEST)
+if(BUILD_TESTS)
     if(USE_GIT_SUBMODULES)
-        message(STATUS "GIT SUBMODULES: updating git submodules...")
         add_git_submodule(thridparty/googletest ${GOOGLE_TEST_TAG_VERSION})
     else()
         message(STATUS "FETCH CONTENT: Clone Google Test Framework from Git repository...")
@@ -69,16 +88,11 @@ if(INCLUDE_GTEST)
     endif()
 endif()
 
+### Add subdirectories
 add_subdirectory(configuration)
 add_subdirectory(thridparty)
-
 add_subdirectory(src)
 
 # It must to be declare before the test folder
 enable_testing()
-
-if(BUILD_TESTS)
-    add_subdirectory(tests)
-endif()
-
-
+add_subdirectory(tests)

@@ -55,7 +55,9 @@ function(target_set_warnings)
         -Wnon-virtual-dtor # if a class with virtual func has a non-virtual dest
         -Wold-style-cast # warn for c-style casts
         -Woverloaded-virtual # if you overload (not override) a virtual function
-        -Weffc++ # violations from Scott Meyers’ Effective C++
+
+        # If this warning below is enabled, many warnings will appear regarding the spdlog library
+        # -Weffc++ # violations from Scott Meyers’ Effective C++
     )
 
     set(GCC_WARNINGS

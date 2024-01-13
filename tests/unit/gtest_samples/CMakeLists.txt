@@ -1,5 +1,3 @@
-include(GoogleTest)
-
 set(GTEST_SAMPLES_TEST gtest_samples_tests)
 
 add_executable( ${GTEST_SAMPLES_TEST}
@@ -11,4 +9,5 @@ target_link_libraries( ${GTEST_SAMPLES_TEST}
     GTest::gtest_main
 )
 
+include(GoogleTest)
 gtest_discover_tests( ${GTEST_SAMPLES_TEST} )
