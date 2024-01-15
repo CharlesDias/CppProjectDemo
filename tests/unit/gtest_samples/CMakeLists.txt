@@ -1,5 +1,3 @@
-set(GTEST_SAMPLES_TEST gtest_samples_tests)
-
 add_executable( ${GTEST_SAMPLES_TEST}
     sample1_unittest.cpp
 )

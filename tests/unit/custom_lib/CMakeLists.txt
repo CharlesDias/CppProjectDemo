@@ -1,5 +1,3 @@
-set(CUSTOM_LIB_TEST custom_lib_test)
-
 add_executable( ${CUSTOM_LIB_TEST}
     my_lib.cpp
 )

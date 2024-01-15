@@ -30,6 +30,12 @@ tests: build_tests
 	GTEST_COLOR=1 ctest --test-dir build/tests --rerun-failed --output-on-failure -j4
 	@echo ""
 
+coverage:
+	@echo "-------------------- Build Coverage--------------------------"
+	cmake -DBUILD_TESTS=ON -DENABLE_COVERAGE=ON -S . -B build
+	cmake --build build --config Debug --target coverage -j4
+	@echo ""
+
 quality:
 	@echo "-------------------- Running Code Quality -------------------"
 	flawfinder --html --context --minlevel=1 ./src  > docs/report-flawfinder.html
@@ -54,4 +60,4 @@ clear:
 	rm -rf build
 	@echo ""
 
-phony: all build_app build_lib build_tests run tests quality dependency doc clear
+phony: all build_app build_lib build_tests run tests coverage quality dependency doc clear

@@ -24,6 +24,7 @@ option(USE_GIT_SUBMODULES "Use git submodules during build" ON)
 option(ENABLE_WARNINGS "Enable to add warnings to a target." ON)
 option(ENABLE_WARNINGS_AS_ERRORS "Enable to treat warnings as errors." OFF)
 
+option(ENABLE_COVERAGE "Enable a Code Coverage." OFF)
 option(ENABLE_CLANG_TIDY "Enable to add clang tidy." OFF)
 
 option(ENABLE_CLANG_FORMAT "Enable to add clang-format." OFF)
@@ -56,6 +57,11 @@ if(ENABLE_SANITIZE_ADDR OR ENABLE_SANITIZE_UNDEF)
     message(STATUS "SANITIZER: Enabling sanitizers...")
     include(Sanitizer)
     add_sanitizer_flags()
+endif()
+
+if(ENABLE_COVERAGE)
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
 endif()
 
 ### Thrid party libraries
