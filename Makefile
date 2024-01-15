@@ -32,7 +32,7 @@ tests: build_tests
 
 coverage:
 	@echo "-------------------- Build Coverage--------------------------"
-	cmake -DBUILD_TESTS=ON -DENABLE_COVERAGE=ON -S . -B build
+	cmake -DBUILD_TESTS=ON -DENABLE_COVERAGE=ON -DBUILD_APPLICATION=OFF -S . -B build
 	cmake --build build --config Debug --target coverage -j4
 	@echo ""
 
