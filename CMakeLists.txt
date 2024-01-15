@@ -40,6 +40,7 @@ set(GTEST_SAMPLES_LIB gtest_samples)
 ### CMAKE MODULES
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
+include(ConfigSafeGuards)
 include(AddGitSubmodule)
 include(Docs)
 include(Tools)
