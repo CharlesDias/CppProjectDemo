@@ -27,8 +27,10 @@ if(BUILD_TESTS)
 
         setup_target_for_coverage_lcov(
             NAME ${COVERAGE_MAIN}
-            EXECUTABLE ${COVERAGE_DEPENDENCIES}
+            EXECUTABLE ctest
             DEPENDENCIES ${COVERAGE_DEPENDENCIES}
+            LCOV_ARGS --rc lcov_branch_coverage=1
+            GENHTML_ARGS --branch-coverage --legend --title "CPP Project Demo Coverage"
         )
     endif()
 endif()
