@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Executable Call",
+            "type": "shell",
+            "command": [
+                "${workspaceFolder}/build/src/app/application",
+            ],
+            "args": [
+                "--help"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        }
+    ]
+}
