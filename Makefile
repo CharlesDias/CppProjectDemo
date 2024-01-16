@@ -20,6 +20,12 @@ build_tests:
 	cmake --build build -j4
 	@echo ""
 
+build_arm32:
+	@echo "-------------------- Build Application ----------------------"
+	cmake -DCMAKE_TOOLCHAIN_FILE=Toolchains/arm32-cross-toolchain.cmake -S . -B build_arm32
+	cmake --build build_arm32 -j8
+	@echo ""
+
 run:
 	@echo "-------------------- Running the application ----------------"
 	./build/src/app/application -h
@@ -60,4 +66,10 @@ clear:
 	rm -rf build
 	@echo ""
 
-phony: all build_app build_lib build_tests run tests coverage quality dependency doc clear
+clear_arm32:
+	@echo ""
+	@echo "-------------------- Clear build folder ---------------------"
+	rm -rf build_arm32
+	@echo ""
+
+phony: all build_app build_lib build_tests build_arm32 run tests coverage quality dependency doc clear
